@@ -1,0 +1,5 @@
+FROM mysql:5.7
+
+WORKDIR /home/shk-pilot
+ADD /initial.sql /docker-entrypoint-initdb.d/initial.sql
+# ADD mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
