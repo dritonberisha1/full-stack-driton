@@ -1,6 +1,19 @@
 version: "3"
 
 services:
+  api:
+    container_name: full-stack-api
+    build:
+      context: ./api
+      dockerfile: dockerfile
+    env_file:
+      - ./ops/localhost.env
+    ports:
+      - "3001:3001"
+    networks:
+      - full-stack-net
+    volumes:
+      - ./api:/full-stack/api
   db:
     container_name: full-stack-db
     build:
@@ -13,9 +26,9 @@ services:
     volumes:
       - dbdata:/var/lib/mysql1
 
-volumes:
-  dbdata:
-
 networks:
   full-stack-net:
     driver: bridge
+
+volumes:
+  dbdata:
