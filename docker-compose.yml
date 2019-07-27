@@ -23,6 +23,8 @@ services:
       - ./ops/localhost.env
     ports:
       - "3306:3306"
+    networks:
+      - full-stack-net
     volumes:
       - dbdata:/var/lib/mysql1
 

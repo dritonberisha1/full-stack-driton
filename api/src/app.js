@@ -3,6 +3,8 @@ import cors from 'cors';
 import createError from 'http-errors';
 import express from 'express';
 import logger from 'morgan';
+import authRoutes from './routes/auth-routes';
+import userRoutes from './routes/user-routes';
 
 const app = express();
 
@@ -12,6 +14,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+
+//Routes
+app.use('/', authRoutes);
+app.use('/users', userRoutes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -25,7 +31,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({'error': err});
 });
 
 module.exports = app;

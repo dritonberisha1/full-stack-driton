@@ -1,9 +1,9 @@
 import app from './app';
-import config from './config';
+import {server as serverConfig} from './config';
 import http from 'http';
 
 const server = http.createServer(app);
 
-server.listen(config.server.port, config.server.hostname, () => {
-    console.log(`Server running at http://${config.server.hostname}:${config.server.port}/`);
+server.listen(serverConfig.port, serverConfig.hostname, () => {
+    console.log(`Server running at http://${serverConfig.hostname}:${serverConfig.port}/`);
 });
