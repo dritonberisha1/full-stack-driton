@@ -27,6 +27,20 @@ services:
       - full-stack-net
     volumes:
       - dbdata:/var/lib/mysql1
+  web:
+    container_name: default-web
+    build:
+      context: ./web
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - default-network
+    volumes:
+      - ./ops:/full-stack/ops
+      - ./web:/full-stack/web
+    env_file:
+      - ./ops/localhost.env
 
 networks:
   full-stack-net:

@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 class UserService {
 
     /**
-     * @param {Object} user
+     * @param user {Object}
      * @return A promise resolves the created user
      */
     async createUser(user) {
@@ -13,8 +13,13 @@ class UserService {
         return await userRepository.createUser({...user, password: encryptedPassword});
     }
 
-    getUser(){
-
+    /**
+     * @param user {Object}
+     * @return {Promise<void>}
+     */
+    async getUser(user){
+        if(!user.id) throw Error('User id not provided');
+        return await userRepository.getUser(user.id);
     }
 
     likeUser(){

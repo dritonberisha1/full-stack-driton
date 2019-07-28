@@ -19,11 +19,24 @@ class UserRepository {
     /**
      * This query tries to find the user by matching his username
      *
+     * @param {string} userId
+     * @return A promise resolved the query result
+     */
+    getUser(userId){
+        const sql = `SELECT username, created_at, updated_at FROM ?? WHERE username = ?`;
+        const params = [userTableName, username];
+
+        return _query(sql, params);
+    }
+
+    /**
+     * This query tries to find the user by matching his username
+     *
      * @param username
      * @return A promise resolved the query result
      */
     getUserByUsername(username){
-        const sql = `SELECT username, created_at, updated_at FROM ?? WHERE username = ?`;
+        const sql = `SELECT username, password, created_at, updated_at FROM ?? WHERE username = ?`;
         const params = [userTableName, username];
 
         return _query(sql, params);

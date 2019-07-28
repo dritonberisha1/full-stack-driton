@@ -15,7 +15,7 @@ export const encryption = {
     saltRounds: 10
 };
 
-export const jwtToken = {
+export const jwt = {
     expiresIn: '12h',
     algorithm: 'RS256',
     key: process.env.JWT_KEY || 'hash_key'
