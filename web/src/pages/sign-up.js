@@ -1,6 +1,5 @@
 import React from 'react';
 import modes from "../shared/modes";
-import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import * as actions from "../actions/auth-actions";
 
