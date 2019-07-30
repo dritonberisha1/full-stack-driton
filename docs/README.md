@@ -1,6 +1,18 @@
 # Full Stack Assignment
 ## Setup local
+   To setup project make sure you have docker installed
    
+  * Go into the main directory `full-stack-driton` and run `docker-compose build`
+  * When build has finished run `docker-compose up`
+  * When containers are up go into container (Node is not started automatically so you can run tests first)
+    * First into the web container `docker exec -it full-stack-web bash` 
+        * Here you can run `npm start` or `npm test`
+    * Second into the api container `docker exec -it full-stack-api bash`
+        * Here you can run `npm start` or `npm test`
+  * When both containers have been started and `npm start` has been run you can go to `localhost:3000` to checkout the app
+  
+ Note: There are some users and likes into the database out of the box so you can see functionality with less efort
+        
 ## Base models
 ### Get User 
 ```
@@ -21,7 +33,8 @@
 ```
 {
     createdAt: date,
-    likes: integer,
+    id: integer,
+    userLikes: [ users ],
     updatedAt: date,
     username: string,
 }
