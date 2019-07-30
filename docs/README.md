@@ -6,8 +6,10 @@
   * When build has finished run `docker-compose up`
   * When containers are up go into container (Node is not started automatically so you can run tests first)
     * First into the web container `docker exec -it full-stack-web bash` 
-        * Here you can run `npm start` or `npm test`
+        * Run `npm install`
+        * After this you can run `npm start` or `npm test`
     * Second into the api container `docker exec -it full-stack-api bash`
+        * Run `npm install`
         * Here you can run `npm start` or `npm test`
   * When both containers have been started and `npm start` has been run you can go to `localhost:3000` to checkout the app
   
