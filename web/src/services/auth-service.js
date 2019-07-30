@@ -12,11 +12,11 @@ class AuthService extends BaseService{
         return Promise.resolve();
     };
 
-    signUp = (data) => {
+    changePassword = (data) => {
         return this._apiPost({
-            auth: false,
+            auth: true,
             data: data,
-            path: '/signup',
+            path: '/users/me/update-password',
         })
     };
 
@@ -24,7 +24,7 @@ class AuthService extends BaseService{
         return new Promise((resolve, reject) => {
             const session = localStorage.getItem('session');
             if(session) resolve(JSON.parse(session));
-            reject();
+            reject({code:403, message:"User is not logged in"});
         });
     };
 
@@ -37,7 +37,16 @@ class AuthService extends BaseService{
             localStorage.removeItem('session');
             resolve();
         });
-    }
+    };
+
+    signUp = (data) => {
+        return this._apiPost({
+            auth: false,
+            data: data,
+            path: '/signup',
+        })
+    };
+
 }
 
 export default new AuthService();

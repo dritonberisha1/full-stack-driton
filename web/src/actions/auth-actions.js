@@ -35,9 +35,23 @@ export const signUp = () => {
 
 export const getCurrentUser = () => {
     return (dispatch) => {
-        dispatch({type: types.USER_MODE ,mode: modes.FETCHING});
+        dispatch({type: types.AUTH_MODE ,mode: modes.FETCHING});
         return userService.getCurrentUser()
             .then((results) => dispatch({type: types.AUTH_USER_DATA, user: results.data, mode: modes.BROWSE}))
-            .catch(error => console.error("error"));
+            .catch(error => dispatch({type: types.AUTH_MODE, mode: modes.WITH_ERROR}));
+    }
+};
+
+export const changePassword = () => {
+    return (dispatch, getState) => {
+        const { newPassword, oldPassword } = getState().authReducer;
+        dispatch({type: types.AUTH_MODE ,mode: modes.FETCHING});
+        return authService.changePassword({newPassword, oldPassword})
+            .then(() => {
+                dispatch({type: types.RESET_PASSWORDS});
+                dispatch({type: types.AUTH_MODE ,mode: modes.BROWSE});
+                return Promise.resolve();
+            })
+            .catch(error => dispatch({type: types.AUTH_MODE_ERROR, mode: modes.WITH_ERROR, errorMessage: 'Could not change password!'}));
     }
 };

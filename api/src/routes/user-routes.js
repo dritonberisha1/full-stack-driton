@@ -1,6 +1,7 @@
 import {verifyJwt} from '../middleware/auth';
 import express from 'express';
 import userService from '../services/user-service';
+import authService from '../services/auth-service';
 const router = express.Router();
 
 //AUTH PROTECTED
@@ -17,7 +18,7 @@ router.get('/me', verifyJwt,  async (request, response) => {
 //AUTH PROTECTED
 router.post('/me/update-password', verifyJwt,  async (request, response) => {
     try {
-        const result = await userService.changePassword(request.body);
+        const result = await authService.changePassword(request.body);
         response.status(201).json({data: result});
     } catch (error) {
         console.error('I FAILED', error);

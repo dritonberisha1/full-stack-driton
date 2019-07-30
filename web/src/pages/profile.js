@@ -1,13 +1,18 @@
 import React, {Component, Fragment} from 'react';
 import modes from "../shared/modes";
-import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import * as actions from "../actions/auth-actions";
 import authService from '../services/auth-service';
 
 class Profile extends Component {
 
     signOut = () => {
         authService.signOut().then(() => this.props.history.push('/'));
-    }
+    };
+
+    changePassword = () => {
+        this.props.changePassword();
+    };
 
     render(){
         return(
@@ -19,7 +24,7 @@ class Profile extends Component {
                 <form>
                     <div className="form-group">
                         <label htmlFor="oldPassword">Old Password</label>
-                        <input type="text" className="form-control"
+                        <input type="password" className="form-control"
                                id="oldPassword"
                                name="oldPassword"
                                value={this.props.oldPassword}
@@ -35,7 +40,7 @@ class Profile extends Component {
                                onChange={this.props.onChange}
                                placeholder="New Password"/>
                     </div>
-                    <button className="btn btn-primary mt-3" onClick={this.authenticate} type="button"
+                    <button className="btn btn-primary mt-3" onClick={this.changePassword} type="button"
                             disabled={this.props.mode === modes.FETCHING}> Change password
                     </button>
                 </form>
@@ -44,4 +49,10 @@ class Profile extends Component {
     }
 }
 
-export default Profile
+const mapStateToProps = ({authReducer}) => {
+    return {
+        ...authReducer
+    };
+};
+
+export default connect(mapStateToProps, actions)(Profile);

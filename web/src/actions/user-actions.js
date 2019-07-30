@@ -26,7 +26,14 @@ export const likeUser = (userId) => {
         dispatch({type: types.USER_MODE ,mode: modes.FETCHING});
         return userService.likeUser(userId)
             .then(() => dispatch({type: types.USER_MODE, mode: modes.BROWSE}))
-            .catch(error => dispatch({type: types.USER_MODE_ERROR, mode: modes.WITH_ERROR, errorMessage: 'Could not like user!'}));
+            .catch(error => {
+                dispatch({
+                    type: types.USER_MODE_ERROR,
+                    mode: modes.WITH_ERROR,
+                    errorMessage: error.code === 403 ? error.message : 'Could not like user!'
+                });
+                return Promise.reject();
+            });
 
     }
 };
@@ -36,7 +43,13 @@ export const unlikeUser = (userId) => {
         dispatch({type: types.USER_MODE ,mode: modes.FETCHING});
         return userService.unlikeUser(userId)
             .then(() => dispatch({type: types.USER_MODE, mode: modes.BROWSE}))
-            .catch(error => dispatch({type: types.USER_MODE_ERROR, mode: modes.WITH_ERROR, errorMessage: 'Could not unlike user!'}));
+            .catch(error => {
+                dispatch({
+                    type: types.USER_MODE_ERROR,
+                    mode: modes.WITH_ERROR,
+                    errorMessage: error.code === 403 ? error.message : 'Could not like user!'
+                })
+            });
 
     }
 };

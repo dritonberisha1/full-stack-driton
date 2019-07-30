@@ -9,6 +9,9 @@ class UserService {
      * @return A promise resolves the created user
      */
     async createUser(user) {
+        if(!user) throw Error("User should be provided");
+        if(!user.password) throw Error("User should have password");
+
         const encryptedPassword = await bcrypt.hash(user.password, encryption.saltRounds);
         return await userRepository.createUser({...user, password: encryptedPassword});
     }
@@ -29,6 +32,7 @@ class UserService {
     async getUser(user){
         if(!user.id) throw Error('User id not provided');
         const results = await userRepository.getUser(user.id);
+        console.log("RESULTSSSS", results);
         if(!results[0]) throw Error('User not found');
         const authUser = {
             ...results[0][0],

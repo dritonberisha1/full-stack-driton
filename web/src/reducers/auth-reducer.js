@@ -7,11 +7,19 @@ const initialState = {
     password: '',
     user: {
         username: ''
-    }
+    },
+    newPassword: '',
+    oldPassword: ''
 };
 
 export const authReducer = (state = initialState, action) => {
     switch(action.type) {
+        case types.RESET_PASSWORDS:
+            return{
+                ...state,
+                newPassword: '',
+                oldPassword: ''
+            };
         case types.AUTH_ON_CHANGE:
             return {
                 ...state,
@@ -22,10 +30,17 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 mode: action.mode
             };
+        case types.AUTH_MODE_ERROR:
+            return {
+                ...state,
+                mode: action.mode,
+                errorMessage: action.errorMessage
+            };
         case types.AUTH_USER_DATA:
             return {
                 ...state,
-                user: action.user
+                user: action.user,
+                mode: action.mode
             };
         default:
             return state;

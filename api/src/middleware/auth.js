@@ -11,7 +11,6 @@ export const verifyJwt = (request, response, next) => {
         request.user = jwt.verify(token, jwtConfig.key);
         next();
     }catch(error){
-        console.error(error);
         return response.status(403).json({message: 'You are not authorized'});
     }
 
