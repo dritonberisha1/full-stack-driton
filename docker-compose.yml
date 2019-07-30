@@ -28,14 +28,14 @@ services:
     volumes:
       - dbdata:/var/lib/mysql1
   web:
-    container_name: default-web
+    container_name: full-stack-web
     build:
       context: ./web
       dockerfile: dockerfile
     ports:
       - "3000:3000"
     networks:
-      - default-network
+      - full-stack-net
     volumes:
       - ./ops:/full-stack/ops
       - ./web:/full-stack/web

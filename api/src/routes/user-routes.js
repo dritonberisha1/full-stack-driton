@@ -27,7 +27,7 @@ router.post('/me/update-password', verifyJwt,  async (request, response) => {
 
 router.get('/most-liked',  async (request, response) => {
     try {
-        const result = await userService.changePassword(request.body);
+        const result = await userService.fetchUsers();
         response.status(201).json({data: result});
     } catch (error) {
         console.error('I FAILED', error);
@@ -37,7 +37,7 @@ router.get('/most-liked',  async (request, response) => {
 
 router.get('/:userId', async (request, response) => {
     try {
-        const result = await userService.getUser({id: request.params.userId});
+        const result = await userService.getFullUser({id: request.params.userId});
         response.status(201).json({data: result});
     } catch (error) {
         console.error('I FAILED', error);
@@ -48,7 +48,7 @@ router.get('/:userId', async (request, response) => {
 //AUTH PROTECTED
 router.post('/:userId/like', verifyJwt, async (request, response) => {
     try {
-        const result = await userService.changePassword(request.body);
+        const result = await userService.likeUser(request.user, request.params.userId);
         response.status(201).json({data: result});
     } catch (error) {
         console.error('I FAILED', error);
@@ -57,9 +57,9 @@ router.post('/:userId/like', verifyJwt, async (request, response) => {
 });
 
 //AUTH PROTECTED
-router.post('/:userId/unlike', verifyJwt,  async (request, response) => {
+router.delete('/:userId/unlike', verifyJwt,  async (request, response) => {
     try {
-        const result = await userService.changePassword(request.body);
+        const result = await userService.unlikeUser(request.user, request.params.userId);
         response.status(201).json({data: result});
     } catch (error) {
         console.error('I FAILED', error);

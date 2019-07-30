@@ -28,7 +28,7 @@ class AuthService {
         if(!user) throw Error('User not found');
         if(!_matchPasswords(user.password, credentials.password)) throw Error('Passwords not matching');
 
-        const token = jwt.sign({user: user}, jwtConfig.key);
+        const token = jwt.sign({...user}, jwtConfig.key);
         return Promise.resolve(token);
     }
 }

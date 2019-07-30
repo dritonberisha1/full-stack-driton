@@ -1,0 +1,15 @@
+FROM        node:10
+
+# The base node image sets a very verbose log level.
+ENV NPM_CONFIG_LOGLEVEL warn
+
+RUN         echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc
+
+RUN         npm install create-react-app
+
+EXPOSE      3000
+
+RUN         mkdir -p /full-stack/web
+WORKDIR     /full-stack/web
+
+ENTRYPOINT  ["sleep", "2d"]
