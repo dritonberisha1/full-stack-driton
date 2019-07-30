@@ -13,6 +13,7 @@ class UserService {
         if(!user.password) throw Error("User should have password");
 
         const encryptedPassword = await bcrypt.hash(user.password, encryption.saltRounds);
+        console.log("ENCRYP", encryptedPassword);
         return await userRepository.createUser({...user, password: encryptedPassword});
     }
 
@@ -32,7 +33,6 @@ class UserService {
     async getUser(user){
         if(!user.id) throw Error('User id not provided');
         const results = await userRepository.getUser(user.id);
-        console.log("RESULTSSSS", results);
         if(!results[0]) throw Error('User not found');
         const authUser = {
             ...results[0][0],

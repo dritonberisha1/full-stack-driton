@@ -9,8 +9,14 @@ export const authenticate = () => {
 
         dispatch({ type: types.AUTH_MODE, mode: modes.FETCHING });
         return authService.authenticate({ username, password })
-            .then((results) => dispatch({type: types.AUTH_MODE, mode: modes.BROWSE}))
-            .catch(error => dispatch({type: types.AUTH_MODE_ERROR, mode: modes.WITH_ERROR, errorMessage: ''}));
+            .then((results) => {
+                dispatch({type: types.AUTH_MODE, mode: modes.BROWSE})
+                return Promise.resolve();
+            })
+            .catch(error => {
+                dispatch({type: types.AUTH_MODE_ERROR, mode: modes.WITH_ERROR, errorMessage: 'Password or username incorrect!'})
+                return Promise.reject();
+            });
     };
 };
 

@@ -39,6 +39,18 @@ class UserRepository {
         return _query(sql, params);
     }
 
+    /**
+     * This query tries to find the user by matching his username
+     *
+     * @param {string} userId
+     * @return A promise resolved the query result
+     */
+    getUserWithPassword(userId){
+        const sql = `SELECT id, username, password, created_at, updated_at FROM ?? WHERE users.id = ?`;
+        const params = [userTableName, userId, userTableName, likeTableName, userId];
+        return _query(sql, params);
+    }
+
     getFullUser(userId){
         const sql = `SELECT id, username, created_at, updated_at, (SELECT COUNT(id) FROM ?? WHERE liked_user_id = ??.id) as likes FROM ?? WHERE id = ?`;
         const params = [likeTableName,userTableName, userTableName, userId];
@@ -80,8 +92,8 @@ class UserRepository {
     updatePassword(data){
         const sql = `UPDATE ?? 
             SET password = ?
-            WHERE id = ? AND password = ?`;
-        const params = [userTableName, data.newPassword, data.id, data.oldPassword];
+            WHERE id = ?`;
+        const params = [userTableName, data.newPassword, data.id];
 
         return _query(sql, params);
     }

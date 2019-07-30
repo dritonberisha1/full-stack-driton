@@ -9,12 +9,16 @@ class AuthService {
      * @param {Object} data
      * @return A promise resolves the created user
      */
-    async changePassword(data){
-        const passwords = {
-            oldPassword: await bcrypt.hash(data.oldPassword, encryption.saltRounds),
+    async changePassword(user, data){
+        const postData = {
+            id: user.id,
             newPassword: await bcrypt.hash(data.newPassword, encryption.saltRounds)
         };
-        return await userRepository.updatePassword(passwords);
+        const [dbUser] = await userRepository.getUserWithPassword(user.id);
+        console.log("DATA", dbUser);
+        if(!await bcrypt.compare(data.oldPassword, dbUser.password)) throw Error("Old password is incorrect");
+
+        return await userRepository.updatePassword(postData);
     }
 
     /**
@@ -26,15 +30,11 @@ class AuthService {
         const [user] = await userRepository.getUserByUsername(credentials.username);
 
         if(!user) throw Error('User not found');
-        if(!_matchPasswords(user.password, credentials.password)) throw Error('Passwords not matching');
+        if(!await bcrypt.compare(credentials.password, user.password)) throw Error('Passwords not matching');
 
         const token = jwt.sign({...user}, jwtConfig.key);
         return Promise.resolve(token);
     }
 }
-
-const _matchPasswords = async (userPassword, inputPassword) => {
-    return userPassword === await bcrypt.hash(inputPassword, encryption.saltRounds);
-};
 
 export default new AuthService();

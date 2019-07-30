@@ -21,6 +21,12 @@ class Profile extends Component {
                 <button className="btn btn-primary" onClick={this.signOut}>Sign Out</button>
                 <hr/>
                 <h2>Change password</h2>
+                {this.props.mode === modes.WITH_ERROR && (
+                    <div className="alert alert-danger">
+                        <i className="fas fa-exclamation-circle pr-2"></i>
+                        {this.props.errorMessage}
+                    </div>
+                )}
                 <form>
                     <div className="form-group">
                         <label htmlFor="oldPassword">Old Password</label>

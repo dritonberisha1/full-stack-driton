@@ -18,7 +18,7 @@ router.get('/me', verifyJwt,  async (request, response) => {
 //AUTH PROTECTED
 router.post('/me/update-password', verifyJwt,  async (request, response) => {
     try {
-        const result = await authService.changePassword(request.body);
+        const result = await authService.changePassword(request.user, request.body);
         response.status(201).json({data: result});
     } catch (error) {
         console.error('I FAILED', error);
