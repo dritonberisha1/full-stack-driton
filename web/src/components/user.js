@@ -23,9 +23,9 @@ class User extends Component {
         return (
             <div className="card mb-3">
                 <div className="d-inline px-5 py-3">
-                    <span>{this.props.user.username}</span>
+                    <span>{this.props.user && this.props.user.username}</span>
                     <i className={`far fa-thumbs-up fa-lg float-right ${this.props.isLiked ? 'liked' : ''}`} onClick={this.likeUnlikeUser}></i>
-                    <span className="mr-3 float-right">{this.props.user.likes}</span>
+                    <span className="mr-3 float-right">{this.props.user && this.props.user.likes}</span>
                 </div>
             </div>
         )
